@@ -18,7 +18,7 @@ body {
 }
 
 .hero-section {
-    height: 30vh;
+    height: 35vh;
     width: 100%;
     background-image: url('https://t4.ftcdn.net/jpg/05/08/80/19/360_F_508801991_UTsCAOorx25USitqonfRADueJlzyjhDq.jpg');
     background-size: cover;
@@ -29,7 +29,7 @@ body {
 
 .hero-section>.hero-section__content {
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0);
     flex-direction: column;
     padding: 10px;
     color: white;
@@ -78,6 +78,7 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 2rem;
+    box-sizing: border-box;
 }
 
 .contact-us-form-container>.contact-us-form {
