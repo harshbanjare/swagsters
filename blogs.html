@@ -99,7 +99,21 @@
 
     <div class="container">
 
-        <h1>Soon!</h1>
+
+        <section class="hero-section">
+            <div class="hero-section__content">
+                <h1 class="hero-section__title">Our Blogs</h1>
+                <p class="hero-section__text"> Learn With Swag</p>
+
+            </div>
+        </section>
+
+        <div class="blogs-container">
+            <h1>Loading...</h1>
+
+        </div>
+
+
 
         <footer>
             <div class="footer-logo">
@@ -132,7 +146,51 @@
         </footer>
     </div>
 
+    <script>
 
+        const render_blogs = async () => {
+            const blogs_container = document.querySelector('.blogs-container');
+            const blogs_req = await fetch('https://asia-east2-swagsters.cloudfunctions.net/api/blogs');
+            const blogs_data = await blogs_req.json();
+
+            const blogs = blogs_data.blogs;
+
+            blogs_container.innerHTML = '';
+            blogs.forEach(blog => {
+
+                let title = blog.title.length > 18 ? blog.title.slice(0, 18) + '...' : blog.title;
+                const blog_html = `
+                <a href="#">
+                <div class="featured-blog">
+                    <div class="featured-blog-img">
+                        <img src="${blog.picture}" alt="" srcset="">
+                    </div>
+                    <div class="featured-blog-title">
+                        <h1>${title}</h1>
+                    </div>
+                    <div class="featured-blog-meta">
+                        <p class="featured-blog-author">By ${blog.author}</p>
+                        <p class="featured-blog-date">${blog.date}</p>
+                    </div>
+                </div>
+
+                </a>
+                `;
+
+                blogs_container.innerHTML += blog_html;
+            });
+
+
+        }
+
+
+
+
+        window.addEventListener('load', () => {
+            render_blogs();
+        });
+
+    </script>
 
 </body>
 
