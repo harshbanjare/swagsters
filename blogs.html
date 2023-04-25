@@ -144,19 +144,28 @@
     </div>
 
     <script>
+        const sortByDate = arr => {
+            const sorter = (a, b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime();
+            }
+            arr.sort(sorter);
+        };
 
         const render_blogs = async () => {
             const blogs_container = document.querySelector('.blogs-container');
             const blogs_req = await fetch('https://asia-east2-swagsters.cloudfunctions.net/api/blogs');
             const blogs_data = await blogs_req.json();
 
-            const blogs = blogs_data.blogs;
+            let blogs = blogs_data.blogs;
 
             blogs_container.innerHTML = '';
+
+            sortByDate(blogs);
+            blogs = blogs.reverse();
             blogs.forEach(blog => {
                 let date = new Date(blog.date);
 
-                let title = blog.title.length > 18 ? blog.title.slice(0, 18) + '...' : blog.title;
+                let title = blog.title.length > 25 ? blog.title.slice(0, 25) + '...' : blog.title;
                 const blog_html = `
                 <a href="blog.html?id=${blog.id}">
                 <div class="featured-blog">
