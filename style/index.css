@@ -21,7 +21,7 @@ body {
     max-height: 50vh;
     height: auto;
     width: 100%;
-    background-image: url(../assets/hero.png);
+    background-image: url(../assets/hero-swagsters.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@ body {
 
 .hero-section>.hero-section__content {
     display: flex;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.1);
     flex-direction: column;
     padding: 2rem;
     color: white;
