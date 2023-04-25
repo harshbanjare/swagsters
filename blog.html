@@ -8,7 +8,7 @@
     <!--add favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/style/nav.css">
-    <link rel="stylesheet" href="/style/blogs.css">
+    <link rel="stylesheet" href="/style/blog.css">
     <link rel="stylesheet" href="/style/footer.css">
 
     <title>Swagsters</title>
@@ -93,23 +93,26 @@
                     </svg></a></li>
         </ul>
     </nav>
-    <script src="./scripts/nav.js"></script>
+    <script src="./scripts/nav.js">
+
+    </script>
 
 
 
     <div class="container">
 
-        <section class="hero-section">
-            <div class="hero-section__content">
-                <h1 class="hero-section__title">Our Blogs</h1>
-                <p class="hero-section__text"> Learn With Swag</p>
-
+        <div class="blog-container">
+            <div class="blog-image">
+                <img id="blog_image" src="https://craftsnippets.com/articles_images/placeholder/placeholder.jpg" alt=""
+                    srcset="">
             </div>
-        </section>
-
-        <div class="blogs-container">
-            <h1>Loading...</h1>
-
+            <div class="blog-title" id="blog_title">Loading...
+            </div>
+            <div class="blog-date" id="blog_date"></div>
+            <div class="blog-author">By <span class="author-name" id="blog_author"></span></div>
+            <div class="blog-content" id="blog_content">
+                <p>Loading...</p>
+            </div>
         </div>
 
         <footer>
@@ -144,49 +147,45 @@
     </div>
 
     <script>
+        const render_blog = async (id) => {
+            const response = await fetch(`https://asia-east2-swagsters.cloudfunctions.net/api/blogs/${id}`);
+            const data = await response.json();
 
-        const render_blogs = async () => {
-            const blogs_container = document.querySelector('.blogs-container');
-            const blogs_req = await fetch('https://asia-east2-swagsters.cloudfunctions.net/api/blogs');
-            const blogs_data = await blogs_req.json();
+            if (data.error) {
+                window.location.href = 'blogs.html';
+                return;
+            }
 
-            const blogs = blogs_data.blogs;
+            if (!data.blog) {
+                window.location.href = 'blogs.html';
+                return;
+            }
 
-            blogs_container.innerHTML = '';
-            blogs.forEach(blog => {
-                let date = new Date(blog.date);
+            const blog = data.blog;
 
-                let title = blog.title.length > 18 ? blog.title.slice(0, 18) + '...' : blog.title;
-                const blog_html = `
-                <a href="blog.html?id=${blog.id}">
-                <div class="featured-blog">
-                    <div class="featured-blog-img">
-                        <img src="${blog.picture}" alt="" srcset="">
-                    </div>
-                    <div class="featured-blog-title">
-                        <h1>${title}</h1>
-                    </div>
-                    <div class="featured-blog-meta">
-                        <p class="featured-blog-author">By ${blog.author}</p>
-                        <p class="featured-blog-date">${date.toDateString()}</p>
-                    </div>
-                </div>
+            let date = new Date(blog.date);
 
-                </a>
-                `;
+            document.querySelector('#blog_image').src = blog.picture;
+            document.querySelector('#blog_title').innerHTML = blog.title;
+            document.querySelector('#blog_date').innerHTML = date.toDateString();
+            document.querySelector('#blog_author').innerHTML = blog.author;
+            document.querySelector('#blog_content').innerHTML = blog.content;
 
-                blogs_container.innerHTML += blog_html;
-            });
 
 
         }
 
-
-
-
         window.addEventListener('load', () => {
-            render_blogs();
-        });
+            const blog_id = window.location.search.split('=')[1];
+            if (blog_id) {
+                render_blog(blog_id);
+            } else {
+                window.location.href = 'blogs.html';
+            }
+        })
+
+
+
 
     </script>
 
