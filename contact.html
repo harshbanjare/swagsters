@@ -124,7 +124,7 @@
                     <textarea name="message" id="message" cols="30" rows="10"></textarea>
                 </div>
 
-                <button class="contact-us-form__button">Submit</button>
+                <button id="submit_button" class="contact-us-form__button">Submit</button>
             </div>
         </div>
 
@@ -150,10 +150,15 @@
 
 
 
-
         </footer>
     </div>
 
+    <script>
+        const submit_button = document.getElementById("submit_button");
+        submit_button.addEventListener("click", function () {
+            window.open("mailto:admin@swagsters.com?subject=Contact Us&body=Name: " + document.getElementById("name").value + "%0D%0AEmail: " + document.getElementById("email").value + "%0D%0AMessage: " + document.getElementById("message").value);
+        });
+    </script>
 
 
 </body>
